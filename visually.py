@@ -30,14 +30,35 @@ for resource in required_resources:
     except Exception as e:
         print(f"Warning: Could not download {resource}: {e}")
 
-# Initialize colorama, translator, and NLTK components
-init()
-translator = Translator()
-try:
-    sentiment_analyzer = SentimentIntensityAnalyzer()
-except Exception as e:
-    print(f"Warning: Could not initialize sentiment analyzer: {e}")
-    sentiment_analyzer = None
+def initialize_nltk():
+    """Initialize NLTK resources"""
+    required_resources = [
+        'punkt',
+        'averaged_perceptron_tagger',
+        'maxent_ne_chunker',
+        'words',
+        'vader_lexicon'
+    ]
+
+    for resource in required_resources:
+        try:
+            nltk.download(resource, quiet=True)
+        except Exception as e:
+            print(f"Warning: Could not download {resource}: {e}")
+
+def initialize_components():
+    """Initialize colorama, translator, and NLTK components"""
+    init()
+    translator = Translator()
+    try:
+        sentiment_analyzer = SentimentIntensityAnalyzer()
+    except Exception as e:
+        print(f"Warning: Could not initialize sentiment analyzer: {e}")
+        sentiment_analyzer = None
+    return translator, sentiment_analyzer
+
+# Initialize components
+translator, sentiment_analyzer = initialize_components()
 
 # Define POS tag descriptions
 POS_DESCRIPTIONS = {
@@ -383,6 +404,21 @@ class VisuallyImpairedAssistant:
             sys.exit(0)
 
 
+def main():
+    """Main entry point for the application"""
+    try:
+        # Initialize NLTK resources
+        initialize_nltk()
+        
+        # Create and run assistant
+        assistant = VisuallyImpairedAssistant()
+        assistant.run()
+    except KeyboardInterrupt:
+        print("\nExiting...")
+    except Exception as e:
+        print(f"Error: {e}")
+        return 1
+    return 0
+
 if __name__ == "__main__":
-    assistant = VisuallyImpairedAssistant()
-    assistant.run()
+    sys.exit(main())

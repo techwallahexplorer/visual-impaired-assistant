@@ -1,6 +1,8 @@
 # Visually Impaired Assistant
 
-A Python-based assistant for visually impaired users that provides speech recognition, text analysis, and audio feedback in both English and Hindi.
+[![Python Application](https://github.com/yourusername/visual-impaired-assistant/actions/workflows/python-app.yml/badge.svg)](https://github.com/yourusername/visual-impaired-assistant/actions/workflows/python-app.yml)
+
+A Python-based assistant for visually impaired users that provides speech recognition, text analysis, and audio feedback in both English and Hindi. This tool helps visually impaired users interact with computers through voice commands and receive detailed analysis of their speech in both English and Hindi.
 
 ## Features
 
@@ -27,26 +29,67 @@ A Python-based assistant for visually impaired users that provides speech recogn
 - Internet connection for speech recognition and translation
 - Working microphone for speech input
 
-## Installation
+## Quick Start
+
+### Installation from PyPI
+
+```bash
+pip install visual-impaired-assistant
+```
+
+### Run the Assistant
+
+```bash
+visual-assistant
+```
+
+## Development Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/visual-impaired-assistant.git
    cd visual-impaired-assistant
    ```
 
 2. Create and activate a virtual environment:
+
    ```bash
    python -m venv .venv
-   .venv\Scripts\activate
+   .venv\Scripts\activate  # On Windows
+   source .venv/bin/activate  # On Unix/MacOS
    ```
 
-3. Install dependencies:
+3. Install in development mode:
+
    ```bash
-   pip install -r requirements.txt
+   pip install -e .
    ```
 
-4. Download NLTK resources (automatic on first run)
+4. NLTK resources will be downloaded automatically on first run
+
+## GitHub Integration
+
+1. Fork the repository on GitHub
+2. Create a new branch for your feature:
+
+   ```bash
+   git checkout -b feature-name
+   ```
+
+3. Make your changes and commit:
+
+   ```bash
+   git add .
+   git commit -m "Add new feature"
+   ```
+
+4. Push to GitHub:
+
+   ```bash
+   git push origin feature-name
+   ```
+5. Create a Pull Request on GitHub
 
 ## Usage
 
