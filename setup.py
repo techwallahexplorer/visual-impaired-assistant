@@ -14,7 +14,7 @@ setup(
     description="A multilingual speech recognition and analysis assistant for visually impaired users",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/visual-impaired-assistant",
+    url="https://github.com/techwallahexplorer/visual-impaired-assistant",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

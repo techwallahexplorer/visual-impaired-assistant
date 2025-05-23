@@ -1,6 +1,6 @@
 # Visually Impaired Assistant
 
-[![Python Application](https://github.com/yourusername/visual-impaired-assistant/actions/workflows/python-app.yml/badge.svg)](https://github.com/yourusername/visual-impaired-assistant/actions/workflows/python-app.yml)
+[![Python Application](https://github.com/techwallahexplorer/visual-impaired-assistant/actions/workflows/python-app.yml/badge.svg)](https://github.com/techwallahexplorer/visual-impaired-assistant/actions/workflows/python-app.yml)
 
 A Python-based assistant for visually impaired users that provides speech recognition, text analysis, and audio feedback in both English and Hindi. This tool helps visually impaired users interact with computers through voice commands and receive detailed analysis of their speech in both English and Hindi.
 
@@ -48,7 +48,7 @@ visual-assistant
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/visual-impaired-assistant.git
+   git clone https://github.com/techwallahexplorer/visual-impaired-assistant.git
    cd visual-impaired-assistant
    ```
 
