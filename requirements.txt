@@ -1,0 +1,17 @@
+SpeechRecognition
+whisper-openai
+pyttsx3
+pyautogui
+transformers
+numpy
+PyAudio
+soundfile
+pywhatkit
+selenium
+webdriver-manager
+PyQt6
+PyQt6-WebEngine
+kagglehub
+pillow
+pywin32
+winshell
