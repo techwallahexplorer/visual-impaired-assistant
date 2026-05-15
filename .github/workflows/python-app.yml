@@ -29,3 +29,8 @@ jobs:
     - name: Download NLTK Data
       run: |
         python -c "import nltk; nltk.download(['punkt', 'averaged_perceptron_tagger', 'maxent_ne_chunker', 'words', 'vader_lexicon'])"
+
+    - name: Test with pytest
+      run: |
+        pip install pytest
+        pytest tests/
