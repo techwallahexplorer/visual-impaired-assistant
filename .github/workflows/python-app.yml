@@ -11,26 +11,63 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest
+    # Ubuntu: has portaudio, espeak, and no display issues
+    # Windows runner lacks audio drivers needed by pyaudio/pyttsx3
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v3
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
       with:
-        python-version: "3.8"
-    
-    - name: Install dependencies
+        python-version: "3.10"
+        cache: "pip"
+
+    # System libs required by pyaudio and pyttsx3 on Linux
+    - name: Install system audio dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        
+        sudo apt-get update -qq
+        sudo apt-get install -y --no-install-recommends \
+          portaudio19-dev \
+          espeak \
+          espeak-ng \
+          python3-dev \
+          libasound2-dev
+
+    - name: Upgrade pip and install build tools
+      run: python -m pip install --upgrade pip wheel setuptools
+
+    - name: Install Python dependencies
+      run: pip install -r requirements-ci.txt
+
     - name: Download NLTK Data
       run: |
-        python -c "import nltk; nltk.download(['punkt', 'averaged_perceptron_tagger', 'maxent_ne_chunker', 'words', 'vader_lexicon'])"
+        python -c "
+        import nltk
+        packages = ['punkt', 'punkt_tab', 'averaged_perceptron_tagger',
+                    'maxent_ne_chunker', 'words', 'vader_lexicon']
+        for pkg in packages:
+            try:
+                nltk.data.find(pkg)
+                print(f'  [ok] {pkg} already present')
+            except LookupError:
+                nltk.download(pkg, quiet=True)
+                print(f'  [dl] {pkg} downloaded')
+        "
 
-    - name: Test with pytest
+    - name: Security audit — check for known vulnerabilities
       run: |
-        pip install pytest
-        pytest tests/
+        pip install pip-audit
+        pip-audit -r requirements-ci.txt --ignore-vuln PYSEC-2022-42974 || true
+      # '|| true' keeps CI green while reporting; remove to make it blocking
+
+    - name: Run smoke tests
+      run: |
+        pip install pytest pytest-cov
+        pytest tests/ -v --tb=short --cov=src --cov-report=term-missing
+
+    - name: Lint check (non-blocking)
+      run: |
+        pip install flake8
+        flake8 src/ --max-line-length=120 --extend-ignore=E501,W503 || true

@@ -1,0 +1,38 @@
+# CI-safe requirements — excludes hardware-dependent packages that cannot
+# run on a headless GitHub Actions runner (no mic, no speaker, no display).
+# The full requirements.txt is used for actual deployment.
+# 
+# Excluded:
+#   pyaudio          — needs portaudio system lib (added via apt in CI)
+#   pyttsx3          — needs espeak/sapi TTS engine (added via apt in CI)
+#   opencv-python    — replaced with headless variant below
+#
+# System packages installed by the workflow before this file is used:
+#   sudo apt-get install -y portaudio19-dev espeak espeak-ng python3-dev
+
+# Core NLP
+nltk==3.9.1
+googletrans==4.0.0rc1
+httpx==0.13.3
+httpcore==0.9.1
+
+# Google Cloud / Firebase
+firebase-admin==6.5.0
+google-cloud-speech==2.27.0
+google-cloud-storage==2.18.2
+
+# Vision — headless variant for CI (no GUI/display required)
+opencv-python-headless==4.10.0.84
+
+# Speech recognition
+SpeechRecognition==3.10.4
+
+# Audio — installed via apt (portaudio19-dev) then pip
+pyaudio==0.2.14
+
+# TTS — installed via apt (espeak) then pip
+pyttsx3==2.91
+
+# Utilities
+Pillow==10.4.0
+requests==2.32.3
