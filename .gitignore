@@ -22,8 +22,14 @@ build/
 
 # Project-specific
 firebase-credentials.json
+# [FIX S1] Credential files must NEVER be committed.
+# Use GOOGLE_APPLICATION_CREDENTIALS env var instead.
+hi.json
+*-service-account.json
+*-credentials.json
 *.log
 .env
+.env.*
 
 # OS-specific
 .DS_Store
