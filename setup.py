@@ -27,7 +27,7 @@ setup(
     install_requires=requirements,
     entry_points={
         "console_scripts": [
-            "visual-assistant=visually:main",
+            "visual-assistant=visual_assistant.visually:main",
         ],
     },
 )
