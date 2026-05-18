@@ -99,23 +99,22 @@ def _safe_translate(text: str, src: str = 'hi', dest: str = 'en') -> str:
 # ─────────────────────────────────────────────
 # NLTK — only download what is missing
 # ─────────────────────────────────────────────
-_REQUIRED_NLTK = [
-    'punkt',
-    'punkt_tab',
-    'averaged_perceptron_tagger',
-    'maxent_ne_chunker',
-    'words',
-    'vader_lexicon',
-    'stopwords',
-]
+_REQUIRED_NLTK = {
+    'punkt': 'tokenizers/punkt',
+    'punkt_tab': 'tokenizers/punkt_tab',
+    'averaged_perceptron_tagger': 'taggers/averaged_perceptron_tagger',
+    'maxent_ne_chunker': 'chunkers/maxent_ne_chunker',
+    'words': 'corpora/words',
+    'vader_lexicon': 'sentiment/vader_lexicon.zip',
+    'stopwords': 'corpora/stopwords',
+}
 
 def initialize_nltk():
     """Download NLTK resources only if they are not already present."""
-    for resource in _REQUIRED_NLTK:
+    for resource, find_path in _REQUIRED_NLTK.items():
         # [FIX E3] Check before downloading — avoids blocking on every cold start.
-        resource_path = f'tokenizers/{resource}' if resource.startswith('punkt') else resource
         try:
-            nltk.data.find(resource_path)
+            nltk.data.find(find_path)
         except LookupError:
             logger.info("Downloading NLTK resource: %s", resource)
             try:

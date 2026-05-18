@@ -45,11 +45,18 @@ jobs:
       run: |
         python -c "
         import nltk
-        packages = ['punkt', 'punkt_tab', 'averaged_perceptron_tagger',
-                    'maxent_ne_chunker', 'words', 'vader_lexicon']
-        for pkg in packages:
+        packages = {
+            'punkt': 'tokenizers/punkt',
+            'punkt_tab': 'tokenizers/punkt_tab',
+            'averaged_perceptron_tagger': 'taggers/averaged_perceptron_tagger',
+            'maxent_ne_chunker': 'chunkers/maxent_ne_chunker',
+            'words': 'corpora/words',
+            'vader_lexicon': 'sentiment/vader_lexicon.zip',
+            'stopwords': 'corpora/stopwords'
+        }
+        for pkg, path in packages.items():
             try:
-                nltk.data.find(pkg)
+                nltk.data.find(path)
                 print(f'  [ok] {pkg} already present')
             except LookupError:
                 nltk.download(pkg, quiet=True)

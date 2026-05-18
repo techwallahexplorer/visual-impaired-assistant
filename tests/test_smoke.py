@@ -120,17 +120,21 @@ class TestSessionId(unittest.TestCase):
 class TestNltkAvailability(unittest.TestCase):
     """Ensure required NLTK data packages are present after CI download step."""
 
-    def test_punkt_available(self):
-        try:
-            nltk.data.find('tokenizers/punkt')
-        except LookupError:
-            self.fail("NLTK 'punkt' not downloaded in CI")
-
-    def test_vader_lexicon_available(self):
-        try:
-            nltk.data.find('sentiment/vader_lexicon')
-        except LookupError:
-            self.fail("NLTK 'vader_lexicon' not downloaded in CI")
+    def test_required_packages_available(self):
+        packages = {
+            'punkt': 'tokenizers/punkt',
+            'punkt_tab': 'tokenizers/punkt_tab',
+            'averaged_perceptron_tagger': 'taggers/averaged_perceptron_tagger',
+            'maxent_ne_chunker': 'chunkers/maxent_ne_chunker',
+            'words': 'corpora/words',
+            'vader_lexicon': 'sentiment/vader_lexicon.zip',
+            'stopwords': 'corpora/stopwords',
+        }
+        for pkg, path in packages.items():
+            try:
+                nltk.data.find(path)
+            except LookupError:
+                self.fail(f"NLTK package '{pkg}' not downloaded in CI (checked path: '{path}')")
 
 
 if __name__ == '__main__':
