@@ -9,8 +9,8 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 setup(
     name="visual-impaired-assistant",
     version="1.1.0",
-    author="Your Name",
-    author_email="user@example.com",
+    author="Jagjeet Singh",
+    author_email="urjagjeetsingh@gmail.com",
     description="A multilingual speech recognition and analysis assistant for visually impaired users",
     long_description=long_description,
     long_description_content_type="text/markdown",
